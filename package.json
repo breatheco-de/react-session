@@ -1,6 +1,6 @@
 {
   "name": "@breathecode/react-session",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create and mantain a sessions in react, compatible with React Router",
   "main": "dist/session.js",
   "scripts": {

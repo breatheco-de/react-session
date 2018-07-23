@@ -1,3 +1,7 @@
+```
+Note: This package is experimental, I'm working on making it a lot lighter by removing some dependencies out of the bundle.
+```
+
 # React Session Management
 
 Create and maintain a sessions in react, compatible with React Router (login/logout) and sync with the localstorage
