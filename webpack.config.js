@@ -5,7 +5,9 @@ module.exports = {
   ],
   output: {
     filename: 'session.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    library: 'react-session',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
@@ -15,20 +17,6 @@ module.exports = {
           use: ['babel-loader']
         }
     ]
-  },
-  externals:{
-    'react': {
-      root: 'React',
-      commonjs: 'react',
-      commonjs2: 'react',
-      amd: 'react'
-    },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs: 'react-dom',
-      commonjs2: 'react-dom',
-      amd: 'react-dom'
-    }
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
