@@ -38,6 +38,22 @@ console.log(session.user);
 console.log(session.access_token);
 ```
 
+#### Change the session and listen to changes
+```js
+import {Session} from 'bc-react-session';
+
+// pass a new user object that will be merged with the previous one
+Session.actions.setUser({
+    id: 2
+});
+
+const unsubscribe = Session.onChange((session) => {
+  unsubscribe();
+  //here is the updated user
+  console.log(session.user);
+});
+```
+
 #### Close the session by doing:
 ```js
 import {Session} from 'bc-react-session';
