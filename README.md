@@ -9,14 +9,14 @@ Create and maintain a sessions in react, compatible with React Router (login/log
 ## Installation
 
 ```
-$ npm i --save @breathecode/react-session
+$ npm i --save bc-react-session
 ```
 
 ## Usage
 
 #### Open a session by doing:
 ```js
-import {Session} from '@breathecode/react-session';
+import {Session} from 'bc-react-session';
 
 const token = '<any token that represents the session>';
 const user = {
@@ -30,7 +30,7 @@ Session.actions.login({ user: user, access_token: token });
 
 #### Retrieve the session on any other moment
 ```js
-import {Session} from '@breathecode/react-session';
+import {Session} from 'bc-react-session';
 const session = Session.store.getSession();
 //retrieve the user
 console.log(session.user);
@@ -40,7 +40,7 @@ console.log(session.access_token);
 
 #### Close the session by doing:
 ```js
-import {Session} from '@breathecode/react-session';
+import {Session} from 'bc-react-session';
 
 Session.actions.logout();
 ```
