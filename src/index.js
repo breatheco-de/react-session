@@ -32,7 +32,6 @@ class _SessionStore extends Flux.DashStore{
     
 }
 let SessionStore = new _SessionStore();
-
 let SessionActions = {
     login: (sessionObject) =>{
         if(typeof sessionObject.access_token == 'undefined') throw new Error("The Session Object must contain an access_token property");
@@ -74,8 +73,12 @@ _PrivateRoute.propTypes = {
     location: PropTypes.object
 };
 
+const onChange = (func) => {
+    return SessionStore.subscribe(SESSION_EVENT, func);
+};
 export let Session = { 
     store: SessionStore, 
+    onChange,
     actions: SessionActions
 };
 export let PrivateRoute = _PrivateRoute;
