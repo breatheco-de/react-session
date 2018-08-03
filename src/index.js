@@ -38,15 +38,17 @@ let SessionActions = {
         if(typeof sessionObject.access_token == 'undefined') throw new Error("The Session Object must contain an access_token property");
         sessionObject.autenticated = true;
         Flux.dispatchEvent(SESSION_EVENT, sessionObject);
-            
-        window.location.href="/";
+    },
+    setUser: (newSession={}) => {
+        const session = SessionStore.getSession();
+        Flux.dispatchEvent(SESSION_EVENT, Object.assign(session.user, newSession));
     },
     logout: () => {
         Flux.dispatchEvent(SESSION_EVENT, { 
             autenticated: false,
-            access_token: null
+            access_token: null,
+            user: null
         });
-        window.location.href="/login";
     }
 };
 
