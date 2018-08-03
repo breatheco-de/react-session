@@ -38,9 +38,10 @@ let SessionActions = {
         sessionObject.autenticated = true;
         Flux.dispatchEvent(SESSION_EVENT, sessionObject);
     },
-    setUser: (newSession={}) => {
+    setUser: (newUser={}) => {
         const session = SessionStore.getSession();
-        Flux.dispatchEvent(SESSION_EVENT, Object.assign(session.user, newSession));
+        const user = Object.assign(session.user, newUser);
+        Flux.dispatchEvent(SESSION_EVENT, {user});
     },
     logout: () => {
         Flux.dispatchEvent(SESSION_EVENT, { 
