@@ -18,7 +18,7 @@ import {Session} from 'bc-react-session';
 Session.login({ 
 	user: {
 	    //any info you want to save on the user session
-	}
+	},
 	access_token: '<any token that represents the session in the backend API>', 
 	expiration: 86400000; // in milliseconds, optional, defaults to 1 day
 });
