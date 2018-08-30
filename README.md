@@ -18,39 +18,44 @@ $ npm i --save bc-react-session
 ```js
 import {Session} from 'bc-react-session';
 
-const token = '<any token that represents the session>';
+const access_token = '<any token that represents the session in your api>';
+
 const user = {
-    username: 'alesanchezr',
-    id: 2234234,
-    //any other info you want to save on the session
+    //any info you want to save on the user session
 }
 
-Session.actions.login({ user: user, access_token: token });
+const expiration = 86400000; //in milliseconds, optional, defaults to 1 day
+
+Session.actions.login({ user, access_token, expiration });
 ```
 
 #### Retrieve the session on any other moment
 ```js
 import {Session} from 'bc-react-session';
-const session = Session.store.getSession();
-//retrieve the user
-console.log(session.user);
-//retrieve the token
-console.log(session.access_token);
+const session = Session.getSession();
+//retrieve the user or the token
+console.log(session.user, session.access_token);
 ```
 
-#### Change the session and listen to changes
+#### Change the session and/or listen to changes
 ```js
 import {Session} from 'bc-react-session';
 
 // pass a new user object that will be merged with the previous one
-Session.actions.setUser({
-    id: 2
+Session.setUser({
+    username: 'alejo'
 });
 
+// listen to session changes
 const unsubscribe = Session.onChange((session) => {
-  unsubscribe();
   //here is the updated user
   console.log(session.user);
+  
+  if(session.expired) console.log('The session has expired')
+  if(session.autenticated) console.log('No one is autenticated')
+  
+  //unsibscribe to session changes if needed
+  unsubscribe();
 });
 ```
 
@@ -58,7 +63,25 @@ const unsubscribe = Session.onChange((session) => {
 ```js
 import {Session} from 'bc-react-session';
 
-Session.actions.logout();
+Session.logout();
+```
+
+#### Check session expiration
+```
+console.log(Session.getSession());
+/*
+ Will output something like this
+ 
+{
+	"autenticated": true,
+	"access_token": "123123",
+	"expiration": 10000,
+	"user": "mario",
+	"createdAt": 1535650896823, // read-only
+	"timeLeft": 232323, // read-only, how much miliseconds are left in the session
+	"expired": false // react-only
+}
+*/
 ```
 
 #### Make a Private Route using react router

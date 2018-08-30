@@ -1,10 +1,11 @@
 {
   "name": "bc-react-session",
-  "version": "1.0.83",
+  "version": "1.0.93",
   "description": "Create and mantain a sessions in react, compatible with React Router",
   "main": "dist/session.js",
   "scripts": {
-    "build": "webpack --mode development"
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
