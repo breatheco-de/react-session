@@ -1,6 +1,6 @@
 {
   "name": "bc-react-session",
-  "version": "1.0.93",
+  "version": "1.0.95",
   "description": "Create and mantain a sessions in react, compatible with React Router",
   "main": "dist/session.js",
   "scripts": {

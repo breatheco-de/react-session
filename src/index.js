@@ -7,8 +7,11 @@ const SESSION_EVENT = "user_session";
 const defaultSession = {
     autenticated: false, 
     access_token: null, 
-    user: null
-}
+    user: null,
+    timeLeft: 0,
+    createdAt: null,
+    expored: false
+};
 class _SessionStore extends Flux.DashStore{
     constructor(){
         super();
@@ -22,15 +25,12 @@ class _SessionStore extends Flux.DashStore{
         localStorage.setItem(SESSION_EVENT, JSON.stringify(newState));
         return newState;
     }
+    
     getPersistedState(){
         let session = JSON.parse(localStorage.getItem(SESSION_EVENT));
-        let timeLeft = session.expiration - (NOW - session.createdAt);
+        if(!session) return session;
         
-        //if the session has expired
-        if(timeLeft <= 0){
-            localStorage.setItem(SESSION_EVENT, JSON.stringify(defaultSession));
-        }
-            
+        let timeLeft = session.expiration - (NOW - session.createdAt);
         session.timeLeft = timeLeft;
         session.expired = (timeLeft <= 0);
         return session;
@@ -47,6 +47,7 @@ class _SessionStore extends Flux.DashStore{
     
 }
 let SessionStore = new _SessionStore();
+
 let SessionActions = {
     login: (sessionObject) =>{
         if(typeof sessionObject.access_token == 'undefined') throw new Error("The Session Object must contain an access_token property");
@@ -58,6 +59,17 @@ let SessionActions = {
         const session = SessionStore.getSession();
         const user = Object.assign(session.user, newUser);
         Flux.dispatchEvent(SESSION_EVENT, {user});
+    },
+    checkForTimout: function() {
+        let sessionTimer = null;
+        const session = SessionStore.getSession();
+        if(session.expired) this.logout();
+        else {
+            if(session.autenticated){
+                if(sessionTimer) clearInterval(sessionTimer);
+                sessionTimer = setInterval(() => this.logout(), session.timeLeft);
+            }
+        }
     },
     logout: () => {
         Flux.dispatchEvent(SESSION_EVENT, defaultSession);

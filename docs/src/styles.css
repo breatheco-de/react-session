@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+}
+.container{
+    width: 400px;
+    margin: auto;
+}
+button{
+    padding: 10px;
+    background: #ededed;
+    border-radius: 5px;
+    font-size: 110%;
+    margin: 5px;
+}
+button:hover{
+    background-color: #BDBDBD;
+    cursor: pointer;
+}
+button.green{
+    background-color: #245600;
+    color: white;
+}
+button.blue{
+    background-color: #2a4282;
+    color: white;
+}
+.button-bar{
+    text-align: center;
+    width: 100%;
+}
+.alert{
+    padding: 10px;
+    font-size: 130%;
+    background: #e0c867;
+    text-align: center;
+}
+input{
+    padding: 5px;
+}
