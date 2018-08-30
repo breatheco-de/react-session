@@ -34,7 +34,7 @@ console.log(session.user, session.access_token);
 ```
 
 #### Listen to session changes
-```
+```js
 // listen to session changes
 const unsubscribe = Session.onChange((session) => {
   console.log(session);
