@@ -1,9 +1,21 @@
 body{
     margin: 0;
 }
+.right, .left{
+    display: inline-block;
+    width: 50%;
+    padding: 10px;
+}
 .container{
-    width: 400px;
+    width: 700px;
     margin: auto;
+}
+.container.wide{
+}
+.demo{
+    background-color: #BDBDBD;
+    margin-bottom: 20px;
+    padding: 20px 0px;
 }
 button{
     padding: 10px;
@@ -36,4 +48,7 @@ button.blue{
 }
 input{
     padding: 5px;
+}
+input[type=text]{
+    width: 100px;
 }
