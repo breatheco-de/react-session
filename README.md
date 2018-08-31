@@ -6,11 +6,10 @@
     <h2 align="center"> React Session Management </h2>
 </p>
 
-[![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-[![npm](https://img.shields.io/npm/v/:package.svg)](https://www.npmjs.com/package/bc-react-session)
-[![npm](https://img.shields.io/npm/dm/:package.svg)](https://www.npmjs.com/package/bc-react-session)
-![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)
-[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+[![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://GitHub.com/breatheco-de/react-session.js/graphs/commit-activity)
+[![npm](https://img.shields.io/npm/v/bc-react-session.svg)](https://www.npmjs.com/package/bc-react-session)
+[![npm](https://img.shields.io/npm/dm/bc-react-session.svg)](https://www.npmjs.com/package/bc-react-session)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/breatheco-de/react-session/blob/master/LICENSE)
 
 
 Create and maintain persisten login sessions on the browser (even if the website is refreshed).
