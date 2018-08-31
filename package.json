@@ -1,6 +1,7 @@
 {
   "name": "bc-react-session",
-  "version": "1.0.95",
+  "version": "1.0.96",
+  "homepage": "https://github.com/breatheco-de/react-session",
   "description": "Create and mantain a sessions in react, compatible with React Router",
   "main": "dist/session.js",
   "scripts": {
