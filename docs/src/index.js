@@ -2,9 +2,9 @@ import React from 'react';
 import ReactROM from 'react-dom';
 import {Session} from 'bc-react-session';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import Readme from './README.md';
 import 'highlight.js/styles/monokai-sublime.css';
 import './styles.css';
+import  Loadable  from 'react-loadable';
 
 import Typography from 'typography';
 import altonTheme from 'typography-theme-alton';
@@ -19,6 +19,7 @@ class App extends React.Component{
         this.state = {
             expiration: defaultMiliseconds,
             enforce: true,
+            readme: null,
             withInterval: true,
             interval: 1000,
             username: 'alesanchezr',
@@ -30,6 +31,12 @@ class App extends React.Component{
     }
     
     componentDidMount(){
+        this.setState({
+            readme: Loadable({
+              loader: () => import('./README.md'),
+              loading: () => 'Loading readme'
+            })
+        });
         Session.onChange((session) => {
           //here is the updated user
           this.setState({ session });
@@ -40,6 +47,7 @@ class App extends React.Component{
     }
     
     render(){
+        const Readme = this.state.readme;
         const timeLeft = this.state.session.expiration - (new Date().getTime() - this.state.session.createdAt);
         return (<div>
             <div className="alert">
@@ -116,7 +124,7 @@ class App extends React.Component{
                 </div>
             </div>
             <div className="container wide">
-                <Readme />
+                {(this.state.readme) ? <Readme /> : ''}
             </div>
         </div>);
     }

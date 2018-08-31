@@ -5,7 +5,7 @@
   "main": "dist/session.js",
   "scripts": {
     "build": "webpack --mode production",
-    "deploy-docs": "gh-pages -d docs/build",
+    "deploy-docs": "cp -fr ./README.md ./docs/src/README.md && gh-pages -d docs/build",
     "build:dev": "webpack --mode development"
   },
   "devDependencies": {
