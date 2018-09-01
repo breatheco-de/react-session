@@ -106,7 +106,7 @@ const _PrivateRoute = function(props){
     return(
         <Route
           {...rest}
-          render={(props) => session.autenticated === true
+          render={(props) => (session.autenticated === true && !session.expired)
             ? <Component {...rest} {...props} />
             : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
         />
