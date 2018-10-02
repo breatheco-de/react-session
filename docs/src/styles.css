@@ -1,10 +1,17 @@
 body{
     margin: 0;
 }
+h2 small{background: red; color: white; padding: 3px;}
+.right{ float: right; padding-top: 55px; }
+.left{ float: left; }
+.session-box.expired pre{
+    border: 3px solid red !important;
+}
 .right, .left{
     display: inline-block;
     width: 50%;
     padding: 10px;
+    height: 365px;
 }
 .container{
     width: 700px;

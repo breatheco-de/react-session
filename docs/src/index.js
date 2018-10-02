@@ -15,18 +15,17 @@ typography.injectStyles();
 class App extends React.Component{
     constructor(){
         super();
-        const defaultMiliseconds = 60000;
+        const session = Session.getSession();
+        const defaultMiliseconds = 5000;
         this.state = {
             expiration: defaultMiliseconds,
-            enforce: true,
+            enforce: (session.payload.destroy === true),
             readme: null,
-            withInterval: true,
-            interval: 1000,
             username: 'alesanchezr',
             expirationSeconds: defaultMiliseconds / 1000,
             expirationMinutes: defaultMiliseconds / 1000 / 60,
             milliseconds: 0,
-            session: Session.getSession()
+            session 
         };
     }
     
@@ -44,6 +43,11 @@ class App extends React.Component{
         setInterval(() => this.setState({ 
             milliseconds: this.state.milliseconds + 1
         }),1);
+        
+        if(this.state.session.active)  Session.onExpiration((_session) => {
+            this.setState({ session: _session });
+            if(_session.payload.destroy || null) Session.destroy();
+        });
     }
     
     render(){
@@ -51,13 +55,13 @@ class App extends React.Component{
         const timeLeft = this.state.session.expiration - (new Date().getTime() - this.state.session.createdAt);
         return (<div>
             <div className="alert">
-                {(!this.state.session.autenticated) ?
-                    <p>Click on "login", refresh the website and the session will remain for {this.state.expirationSeconds} seconds</p>
+                {(!this.state.session.active) ?
+                    <p>Click on "Start Session", refresh the website and the session will remain for {this.state.expirationSeconds} seconds</p>
                     :
                     <div>
-                        <small>{this.state.milliseconds} milisec have passed. </small>
+                        <small>{this.state.milliseconds} milisec have passed since reload. </small>
                         {(this.state.session.expired) ?
-                            <p>The session has expired</p>
+                            <p>The session has expired {timeLeft*-1} milisec ago</p>
                             :
                             <p>In {timeLeft} milisec the session will expire.</p>
                         }
@@ -67,7 +71,12 @@ class App extends React.Component{
             <div className="demo">
                 <div className="container">
                     <div className="left">
-                        <h2>Live session object:</h2>
+                        <h2>
+                            Live session object:
+                            {(this.state.session.expired) ? 
+                                <small>Expired</small>:''
+                            }
+                        </h2>
                         <SessionBox session={this.state.session} />
                     </div>
                     <div className="right">
@@ -77,8 +86,9 @@ class App extends React.Component{
                                 expiration: e.target.value,
                                 expirationSeconds: parseInt(e.target.value,10) / 1000,
                                 expirationMinutes: parseInt(e.target.value,10) / 1000 / 60
-                            })} />
-                            &nbsp;milisec={this.state.expirationSeconds}sec={Math.round(this.state.expirationMinutes,2)}min
+                            })} />milisec
+                            <span> ({this.state.expirationSeconds}s)</span>
+                            { (this.state.expirationMinutes >= 1) ? (<span> sec{Math.round(this.state.expirationMinutes,2)}min</span>) : '' }
                         </p>
                         <p>
                             Username: <input type="text" value={this.state.username} onChange={(e) => this.setState({
@@ -86,40 +96,35 @@ class App extends React.Component{
                             })} />
                         </p>
                         <p>
+                            Destroy on expiration: 
                             <input type="checkbox" checked={this.state.enforce} onChange={(e) => this.setState({
                                 enforce: e.target.checked,
                             })} />
-                            Enforce on refresh: 
-                            {(this.state.enforce) ?
-                                <span>
-                                    <br />
-                                    <input type="checkbox" checked={this.state.withInterval} onChange={(e) => this.setState({
-                                        withInterval: e.target.checked,
-                                        interval: e.target.checked ? 1000 : 0
-                                    })} />
-                                    and also every
-                                    <input type="text" value={this.state.interval} onChange={(e) => this.setState({
-                                        interval: e.target.value,
-                                    })} /> milisec <br />
-                                </span>:''
-                            }
-                            <small>Will automatically close the session (even without website refresh)</small>
+                            <br />
+                            <small>Will destroy the session if it expires</small>
                         </p>
                     </div>
                     <div className="button-bar">
                         <button className="green" onClick={() => {
-                            console.log("Login...");
-                            if(this.state.enforce) Session.enforce((this.state.withInterval) ? this.state.interval : 0);
-                            Session.login({
-                                user: this.state.username,
-                                access_token: '12edWE3Eddew35gyyUjhre5DEWd1Sfd6t@!dfRTgertg',
+                            console.log("start session...");
+                            Session.start({
+                                payload: {
+                                    user: this.state.username,
+                                    destroy: this.state.enforce
+                                },
                                 expiration: this.state.expiration
+                            });
+                            Session.onExpiration((session) => {
+                                this.setState({ session: Session.get() });
+                                if(this.state.enforce){
+                                    Session.destroy();
+                                }
                             });
                             this.setState({ milliseconds: 0 });
                         }
                             
-                        }>Login</button>
-                        <button className="blue" onClick={() => Session.logout()}>Logout</button>
+                        }>Start Session</button>
+                        <button className="blue" onClick={() => Session.destroy()}>Destroy Session</button>
                     </div>
                 </div>
             </div>
@@ -129,7 +134,7 @@ class App extends React.Component{
         </div>);
     }
 }
-const SessionBox = ({session}) => (<div className="session-box">
+const SessionBox = ({session}) => (<div className={"session-box "+(session.expired ? 'expired':'')}>
     {(session) ?
         <SyntaxHighlighter language='json'>{JSON.stringify(session, null, "\t")}</SyntaxHighlighter>
         :

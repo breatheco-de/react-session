@@ -29,27 +29,31 @@ $ npm i --save bc-react-session
 ```js
 import {Session} from 'bc-react-session';
 
-Session.login({ 
-	user: {
-	    //any info you want to save on the user session
+Session.start({ 
+	payload: {
+	    // (optional) any info you want to save on the persisten session
 	},
-	access_token: '<any token that represents the session in the backend API>', 
-	expiration: 86400000; // in milliseconds, optional, defaults to 1 day
+	expiration: 86400000; // (optional) defaults to 1 day
 });
 ```
 
-2) Close the session by doing `Session.logout();`:
+2) Close the session by doing `Session.destroy();`:
 ```js
 import {Session} from 'bc-react-session';
 
-Session.logout();
+Session.destroy();
 ```
 
-3) Retrieve the session from anywhere
+3) Retrieve the session and payload from anywhere
 ```js
 import {Session} from 'bc-react-session';
+
 const session = Session.getSession();
-console.log(session.user, session.access_token);
+const payload = Session.getPayload();
+
+console.log(session.isValid); // will be true if is not expired or innactive
+console.log(payload); // anything you have set on the session payload is stored here
+
 ```
 
 ## That is it!!
@@ -71,23 +75,19 @@ const unsubscribe = Session.onChange((session) => {
 unsubscribe();
 ```
 
-2. Enforce the session for automatic logout (even without refresh)
+2. Wait for session expiration callback
 ```js
 // you need to enforce before calling the login method.
-Session.enforce();
-
-//you can also specify if you want to check for session expiration every X amount of miliseconds
-Session.enforce(600000); //check every 10 minutes
-
+Session.onExpiration((session) => session.destroy()); //you can destroy the session if it expires
 ```
 
-3. Change reset the session user whenever you want
+3. Change reset the session payload whenever you want
 ```js
 import {Session} from 'bc-react-session';
 
-// pass a new user object that will be merged with the previous one
-Session.setUser({
-    username: 'alejo'
+// pass a new username that will override previous one (if any)
+Session.setPayload({
+    username: 'alesanchezr'
 });
 ```
 
