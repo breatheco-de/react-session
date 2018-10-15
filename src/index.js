@@ -103,7 +103,7 @@ const _PrivateRoute = function(props){
     return(
         <Route
           {...rest}
-          render={(props) => (session.isValid)
+          render={(props) => (session.active)
             ? <Component {...rest} {...props} />
             : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
         />
