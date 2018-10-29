@@ -49,8 +49,8 @@ Session.destroy();
 ```js
 import {Session} from 'bc-react-session';
 
-const session = Session.getSession();
-const payload = Session.getPayload();
+const session = Session.get();
+const { payload } = Session.get();
 
 console.log(session.isValid); // will be true if is not expired or innactive
 console.log(payload); // anything you have set on the session payload is stored here
@@ -94,7 +94,7 @@ Session.setPayload({
 
 4. Check session expiration
 ```
-const session = Session.getSession();
+const session = Session.get();
 console.log(session.expired); // boolean
 ```
 
