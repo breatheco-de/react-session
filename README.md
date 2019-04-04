@@ -103,6 +103,8 @@ console.log(session.expired); // boolean
 The library brings a component called `<PrivateRoute />` to make your routes private without any extra code.
 
 ```jsx
+import {PrivateRoute} from 'bc-react-session';
+
 <BrowserRouter>
     <div>
         <PrivateRoute exact path='/profile' component={PrivateLayout} />
