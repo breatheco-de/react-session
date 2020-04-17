@@ -59,6 +59,11 @@ var ReactMarkdown = function (_React$PureComponent) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "a",
+            { href: "https://travis-ci.org/breatheco-de/react-session" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://api.travis-ci.org/breatheco-de/react-session.svg?branch=master", alt: "Tests" })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "a",
             { href: "https://www.npmjs.com/package/bc-react-session" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://img.shields.io/npm/v/bc-react-session.svg", alt: "npm" })
           ),
@@ -314,14 +319,18 @@ var ReactMarkdown = function (_React$PureComponent) {
               { className: "hljs-keyword" },
               "const"
             ),
-            " session = Session.getSession();",
+            " session = Session.get();",
             "\n",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "span",
               { className: "hljs-keyword" },
               "const"
             ),
-            " payload = Session.getPayload();",
+            " ",
+            "{",
+            " payload ",
+            "}",
+            " = Session.get();",
             "\n",
             "\n",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -591,13 +600,19 @@ var ReactMarkdown = function (_React$PureComponent) {
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "code",
-            { className: "hljs language-cpp" },
+            { className: "hljs language-processing" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "span",
               { className: "hljs-keyword" },
               "const"
             ),
-            " session = Session.getSession();",
+            " session = Session.",
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "span",
+              { className: "hljs-built_in" },
+              "get"
+            ),
+            "();",
             "\n",
             "console.",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -640,9 +655,30 @@ var ReactMarkdown = function (_React$PureComponent) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "code",
             { className: "hljs language-jsx" },
-            "<BrowserRouter>",
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "span",
+              { className: "hljs-keyword" },
+              "import"
+            ),
+            " ",
+            "{",
+            "PrivateRoute",
+            "}",
+            " ",
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "span",
+              { className: "hljs-keyword" },
+              "from"
+            ),
+            " ",
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "span",
+              { className: "hljs-string" },
+              "'bc-react-session'"
+            ),
+            ";",
             "\n",
-            "    ",
+            "\n",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "span",
               { className: "xml" },
@@ -653,13 +689,16 @@ var ReactMarkdown = function (_React$PureComponent) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   "span",
                   { className: "hljs-name" },
-                  "div"
+                  "BrowserRouter"
                 ),
                 ">"
               ),
               "\n",
-              "        "
+              "    "
             ),
+            "<div>",
+            "\n",
+            "        ",
             "<PrivateRoute exact path='/profile' component=",
             "{",
             "PrivateLayout",
@@ -668,23 +707,13 @@ var ReactMarkdown = function (_React$PureComponent) {
             "\n",
             "    ",
             "</div>",
+            "\n",
+            "</BrowserRouter>",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "span",
               { className: "xml" },
-              "\n",
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "span",
-                { className: "hljs-tag" },
-                "</",
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  "span",
-                  { className: "hljs-name" },
-                  "BrowserRouter"
-                ),
-                ">"
-              )
-            ),
-            "\n"
+              "\n"
+            )
           )
         )
       );
@@ -699,4 +728,4 @@ var ReactMarkdown = function (_React$PureComponent) {
 /***/ })
 
 });
-//# sourceMappingURL=0.5064bff0.chunk.js.map
+//# sourceMappingURL=0.f90ae6c0.chunk.js.map
