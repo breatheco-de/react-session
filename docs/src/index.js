@@ -19,6 +19,7 @@ class App extends React.Component{
         const defaultMiliseconds = 5000;
         this.state = {
             expiration: defaultMiliseconds,
+            sessionName: "sample-session",
             enforce: (session.payload.destroy === true),
             readme: null,
             username: 'alesanchezr',
@@ -48,6 +49,9 @@ class App extends React.Component{
             this.setState({ session: _session });
             if(_session.payload.destroy || null) Session.destroy();
         });
+
+        const _s = Session.get(this.state.sessionName);
+        if(_s) this.setState({ session: _s });
     }
     
     render(){
@@ -96,6 +100,13 @@ class App extends React.Component{
                             })} />
                         </p>
                         <p>
+                            Session Name: <input type="text" value={this.state.sessionName} onChange={(e) => this.setState({
+                                sessionName: e.target.value,
+                            })} />
+                            <br />
+                            <small>Use different names to avoid coflicts if several websites use this library on the same browser</small>
+                        </p>
+                        <p>
                             Destroy on expiration: 
                             <input type="checkbox" checked={this.state.enforce} onChange={(e) => this.setState({
                                 enforce: e.target.checked,
@@ -106,8 +117,8 @@ class App extends React.Component{
                     </div>
                     <div className="button-bar">
                         <button className="green" onClick={() => {
-                            console.log("start session...");
-                            Session.start({
+                            console.log("start session...", this.state.expiration);
+                            Session.start(this.state.sessionName, {
                                 payload: {
                                     user: this.state.username,
                                     destroy: this.state.enforce
@@ -123,7 +134,7 @@ class App extends React.Component{
                             this.setState({ milliseconds: 0 });
                         }
                             
-                        }>Start Session</button>
+                        }>Start or retrive Session</button>
                         <button className="blue" onClick={() => Session.destroy()}>Destroy Session</button>
                     </div>
                 </div>

@@ -7,12 +7,13 @@
 </p>
 
 [![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://GitHub.com/breatheco-de/react-session.js/graphs/commit-activity)
+[![Tests](https://api.travis-ci.org/breatheco-de/react-session.svg?branch=master)](https://travis-ci.org/breatheco-de/react-session)
 [![npm](https://img.shields.io/npm/v/bc-react-session.svg)](https://www.npmjs.com/package/bc-react-session)
 [![npm](https://img.shields.io/npm/dm/bc-react-session.svg)](https://www.npmjs.com/package/bc-react-session)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/breatheco-de/react-session/blob/master/LICENSE)
 
 
-Create and maintain persisten login sessions on the browser (even if the website is refreshed).
+Create and maintain persistent sessions on the browser (even if the website is refreshed).
 Checkout the [live demo](https://breatheco-de.github.io/react-session/).
 > Note: Extremely easy integration with [React Router](https://github.com/ReactTraining/react-router).
 
@@ -24,7 +25,7 @@ $ npm i --save bc-react-session
 
 ## Usage
 
-1) Open a session by doing `Session.login();`:
+1) Open a session by doing `Session.start();`:
 
 ```js
 import {Session} from 'bc-react-session';
@@ -34,7 +35,7 @@ Session.start({
 	    // (optional) any info you want to save on the persisten session
 	},
 	expiration: 86400000; // (optional) defaults to 1 day
-});
+},"your-session-name");
 ```
 
 2) Close the session by doing `Session.destroy();`:
@@ -44,12 +45,12 @@ import {Session} from 'bc-react-session';
 Session.destroy();
 ```
 
-3) Retrieve the session and payload from anywhere
+3) Retrieve the session and payload from anywhere (make sure you always start the session first)
 ```js
 import {Session} from 'bc-react-session';
 
-const session = Session.getSession();
-const payload = Session.getPayload();
+const session = Session.get();
+const { payload } = Session.get();
 
 console.log(session.isValid); // will be true if is not expired or innactive
 console.log(payload); // anything you have set on the session payload is stored here
@@ -93,7 +94,7 @@ Session.setPayload({
 
 4. Check session expiration
 ```
-const session = Session.getSession();
+const session = Session.get();
 console.log(session.expired); // boolean
 ```
 
@@ -102,6 +103,8 @@ console.log(session.expired); // boolean
 The library brings a component called `<PrivateRoute />` to make your routes private without any extra code.
 
 ```jsx
+import {PrivateRoute} from 'bc-react-session';
+
 <BrowserRouter>
     <div>
         <PrivateRoute exact path='/profile' component={PrivateLayout} />
